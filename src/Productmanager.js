@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 
 class ProductManager {
   constructor(path) {
@@ -11,6 +11,7 @@ class ProductManager {
   }
 
   async addProduct(product) {
+    
     if (
       !product.title ||
       !product.description ||
@@ -21,16 +22,19 @@ class ProductManager {
     ) {
         return console.error('producto invalido')
     }
-    const products = await this.getProducts;
+
+    let products = await this.getProducts();
+    
     const newProduct = {
         title: product.title,
-        descriptiom: product.descriptiom,
+        descriptiom: product.description,
         stock: product.stock,
         thumbnail: product.thumbnail,
         price: product.price,
         code: product.code,
         id: await this.getLength() + 1,
     }
+
     products.push(newProduct);
     
     await fs.promises.writeFile(this.path, JSON.stringify(products), 'utf-8')
@@ -78,3 +82,5 @@ class ProductManager {
     await fs.promises.writeFile(this.path, JSON.stringify(updateProducts), 'utf-8')
   }
 }
+
+export default ProductManager
