@@ -18,13 +18,28 @@ class ProductManager {
       !product.code ||
       !product.stock ||
       !product.thumbnail ||
-      !product.price
+      !product.price ||
+      !product.available
     ) {
         return console.error('producto invalido')
     }
 
     let products = await this.getProducts();
+
     
+    function ConstructoId(num, productos) {
+      let id = num;
+      const ids = productos.map(objeto => objeto.id);
+    
+      while (ids.includes(id)) {
+        id++;
+      }
+    
+      return id;
+    }
+
+    const id = ConstructoId(1,products)
+
     const newProduct = {
         title: product.title,
         descriptiom: product.description,
@@ -32,7 +47,8 @@ class ProductManager {
         thumbnail: product.thumbnail,
         price: product.price,
         code: product.code,
-        id: await this.getLength() + 1,
+        id: id,
+        available: product.available
     }
 
     products.push(newProduct);
